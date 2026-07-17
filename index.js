@@ -1,8 +1,8 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+    const { Client, GatewayIntentBits } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const http = require('http');
 
-// Mở cổng cho Render
+// Mở cổng cho Render (không được xóa)
 http.createServer((req, res) => {
   res.write("Bot is running!");
   res.end();
@@ -19,15 +19,29 @@ const client = new Client({
 
 client.once('ready', () => {
     console.log('Bot đã đăng nhập thành công!');
+
+    // Tự động vào kênh Voice khi khởi động
+    // NHỚ THAY 'ID_KENH_VOICE_CUA_BAN' BẰNG ID THẬT CỦA KÊNH VOICE
+    const channel = client.channels.cache.get('ID_KENH_VOICE_CUA_BAN');
+    if (channel) {
+        joinVoiceChannel({
+            channelId: channel.id,
+            guildId: channel.guild.id,
+            adapterCreator: channel.guild.voiceAdapterCreator,
+        });
+        console.log('Đã tự động vào kênh Voice!');
+    }
 });
 
 client.on('messageCreate', (message) => {
     if (message.author.bot) return;
 
+    // Lệnh !thằng đú
     if (message.content === '!thằng đú') {
         message.reply('tao nghe!');
     }
 
+    // Lệnh !join
     if (message.content === '!join') {
         if (message.member.voice.channel) {
             joinVoiceChannel({
@@ -42,4 +56,4 @@ client.on('messageCreate', (message) => {
     }
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN);  

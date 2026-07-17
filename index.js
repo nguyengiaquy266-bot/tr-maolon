@@ -2,7 +2,6 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const http = require('http');
 
-// Tạo server để Render không bị lỗi
 http.createServer((req, res) => {
   res.write("Bot is running!");
   res.end();

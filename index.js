@@ -22,7 +22,7 @@ client.once('ready', () => {
 
     // Tự động vào kênh Voice khi khởi động
     // NHỚ THAY 'ID_KENH_VOICE_CUA_BAN' BẰNG ID THẬT CỦA KÊNH VOICE
-    const channel = client.channels.cache.get('ID_KENH_VOICE_CUA_BAN');
+    const channel = client.channels.cache.get('1526997801718779954');
     if (channel) {
         joinVoiceChannel({
             channelId: channel.id,

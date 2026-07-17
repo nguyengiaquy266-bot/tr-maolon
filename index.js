@@ -13,6 +13,7 @@ const client = new Client({
         GatewayIntentBits.MessageContent
         GatewayIntentBits.GuildVoiceStates //
       ]
+  });
     client.on('messageCreate', (message) => {
     // Kiểm tra xem người nhắn có phải là bot không, nếu phải thì bỏ qua
     if (message.author.bot) return;

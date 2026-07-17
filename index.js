@@ -2,28 +2,32 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const http = require('http');
 
+// Mở cổng cho Render
 http.createServer((req, res) => {
   res.write("Bot is running!");
   res.end();
 }).listen(process.env.PORT || 3000);
-const client = new Client({ 
+
+const client = new Client({
     intents: [
-        GatewayIntentBits.Guilds, 
-        GatewayIntentBits.GuildMessages, 
-        GatewayIntentBits.MessageContent
-        GatewayIntentBits.GuildVoiceStates //
-      ]
-  });
-    client.on('messageCreate', (message) => {
-    // Kiểm tra xem người nhắn có phải là bot không, nếu phải thì bỏ qua
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildVoiceStates
+    ]
+});
+
+client.once('ready', () => {
+    console.log('Bot đã đăng nhập thành công!');
+});
+
+client.on('messageCreate', (message) => {
     if (message.author.bot) return;
 
-    // Lệnh của bạn
     if (message.content === '!thằng đú') {
         message.reply('tao nghe!');
     }
 
-    // THÊM LỆNH JOIN VÀO ĐÂY:
     if (message.content === '!join') {
         if (message.member.voice.channel) {
             joinVoiceChannel({
@@ -38,20 +42,4 @@ const client = new Client({
     }
 });
 
-client.once('ready', () => {
-    console.log(`Bot đã đăng nhập thành công!`);
-});
-
-client.on('messageCreate', (message) => {
-    // Kiểm tra xem người nhắn có phải là bot không, nếu phải thì bỏ qua
-    if (message.author.bot) return;
-
-    // Kiểm tra nội dung tin nhắn có phải là !ping không
-    if (message.content === '!thằng đú') {
-        // Trả lời lại Pong!
-        message.reply('tao nghe!');
-    }
-});
-
-// THAY ĐỔI DÒNG NÀY: Lấy Token thật từ Discord Portal
 client.login(process.env.TOKEN);

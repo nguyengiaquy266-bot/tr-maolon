@@ -23,4 +23,4 @@ client.on('messageCreate', (message) => {
 });
 
 // THAY ĐỔI DÒNG NÀY: Lấy Token thật từ Discord Portal
-client.login('process.env.TOKEN');
+client.login(process.env.TOKEN);
